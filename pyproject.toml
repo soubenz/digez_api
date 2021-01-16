@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "digez_api"
+name = "digeiz_api"
 version = "0.1.0"
 description = ""
 authors = ["Soufiane Benzaoui <f>"]
