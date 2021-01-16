@@ -53,4 +53,30 @@ def test_create_unit_mall(session, faker):
     assert crud.get_unit_by_name(session, "unique").mall.name == "My mall"
 
 
-    # assert session.query(models.Account).count() == 1
+def test_pagination(session, faker):
+
+    malls = [
+        crud.create_mall(session, schemas.MallBase(name=faker.name()))
+        for x in range(30)
+    ]
+    accounts = [
+        crud.create_account(
+            session,
+            schemas.AccountCreate(name=faker.name(),
+                                  email=faker.email(),
+                                  password=faker.password()))
+        for x in range(30)
+    ]
+    units = [
+        crud.create_unit(session, schemas.UnitBase(name=faker.name()))
+        for x in range(30)
+    ]
+    fetched_units = crud.get_units(session, skip=5, limit=4)
+    assert len(fetched_units) == 4
+    assert [unit.id for unit in fetched_units] == [x for x in range(6, 10)]
+    fetched_accounts = crud.get_accounts(session, skip=10, limit=2)
+    assert len(fetched_accounts) == 2
+    assert [unit.id for unit in fetched_accounts] == [x for x in range(11, 13)]
+    fetched_malls = crud.get_malls(session, skip=20, limit=5)
+    assert len(fetched_malls) == 5
+    assert [unit.id for unit in fetched_malls] == [x for x in range(21, 26)]
