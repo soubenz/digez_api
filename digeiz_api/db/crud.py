@@ -12,13 +12,32 @@ def get_account_by_name(db: Session, name: str):
     return db.query(models.Account).filter(models.Account.name == name).first()
 
 
+def get_accounts(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.Account).offset(skip).limit(limit).all()
+
+
 def get_mall(db: Session, account_id: int):
-    return db.query(
-        models.Account).filter(models.Account.id == account_id).first()
+    return db.query(models.Mall).filter(models.Mall.id == account_id).first()
 
 
-def get_account_by_name(db: Session, name: str):
-    return db.query(models.Account).filter(models.Account.name == name).first()
+def get_mall_by_name(db: Session, name: str):
+    return db.query(models.Mall).filter(models.Mall.name == name).first()
+
+
+def get_malls(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.Mall).offset(skip).limit(limit).all()
+
+
+def get_unit(db: Session, account_id: int):
+    return db.query(models.Unit).filter(models.Unit.id == account_id).first()
+
+
+def get_unit_by_name(db: Session, name: str):
+    return db.query(models.Unit).filter(models.Unit.name == name).first()
+
+
+def get_units(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.Unit).offset(skip).limit(limit).all()
 
 
 def create_account(db: Session,
