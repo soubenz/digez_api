@@ -80,3 +80,49 @@ def test_pagination(session, faker):
     fetched_malls = crud.get_malls(session, skip=20, limit=5)
     assert len(fetched_malls) == 5
     assert [unit.id for unit in fetched_malls] == [x for x in range(21, 26)]
+
+
+def test_delete_account(session, faker):
+    crud.create_account(
+        session,
+        schemas.AccountCreate(name=faker.name(),
+                              email=faker.email(),
+                              password=faker.password()))
+    assert crud.get_account(session, 1) != None
+    crud.delete_account(session, 1)
+    assert crud.get_account(session, 1) == None
+
+
+def test_delete_mall(session, faker):
+    crud.create_mall(session, schemas.MallBase(name=faker.name()))
+    assert crud.get_mall(session, 1) != None
+    crud.delete_mall(session, 1)
+    assert crud.get_mall(session, 1) == None
+
+
+def test_delete_unit(session, faker):
+    crud.create_unit(session, schemas.UnitBase(name=faker.name()))
+    assert crud.get_unit(session, 1) != None
+    crud.delete_unit(session, 1)
+    assert crud.get_unit(session, 1) == None
+
+
+def test_modify(session, faker):
+    crud.create_mall(session, schemas.MallBase(name=faker.name()))
+    assert crud.get_mall(session, 1) != None
+    crud.modify_mall_name(session, "modified", 1)
+    assert crud.get_mall(session, 1).name == "modified"
+
+
+# def test_modify_unit(session, faker):
+#     created = crud.create_unit(session, schemas.UnitBase(name=faker.name()))
+#     assert crud.get_unit(session, 1) != None
+
+#     crud.modify_mall(session, schemas.UnitBase(is_active=False), 1)
+#     assert crud.get_unit(session, 1).is_active == False
+
+# def test_modify_account(session, faker):
+#     crud.create_mall(session, schemas.MallBase(name=faker.name()))
+#     assert crud.get_mall(session, 1) != None
+#     crud.modify_mall(session, schemas.MallBase(name="modified"), 1)
+#     assert crud.get_mall(session, 1).name == "modified"

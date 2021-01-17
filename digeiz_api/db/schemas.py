@@ -5,25 +5,23 @@ from pydantic import BaseModel
 
 class UnitBase(BaseModel):
     name: str
+    is_active: bool = True
 
 
 class Unit(BaseModel):
     id: int
-    is_active: bool = True
 
-    # items: List[Item] = []
     class Config:
         orm_mode = True
 
 
 class MallBase(BaseModel):
     name: str
+    is_active: bool = True
 
 
 class Mall(MallBase):
     id: int
-    is_active: bool = True
-
     units: List[Unit] = []
 
     class Config:
@@ -34,6 +32,7 @@ class AccountBase(BaseModel):
     email: str
     name: str
     mall: Mall = None
+    is_active: bool = True
 
 
 class AccountCreate(AccountBase):
@@ -42,7 +41,7 @@ class AccountCreate(AccountBase):
 
 class Account(AccountBase):
     id: int
-    is_active: bool = True
+
     password: str
 
     # mall: Mall
