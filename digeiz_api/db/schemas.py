@@ -42,7 +42,7 @@ class AccountCreate(AccountBase):
 class Account(AccountBase):
     id: int
 
-    password: str
+    hashed_password: str
 
     # mall: Mall
 
@@ -50,3 +50,17 @@ class Account(AccountBase):
 
     class Config:
         orm_mode = True
+
+
+class Removed(BaseModel):
+    id: int
+    entity: str
+
+
+class Modified(BaseModel):
+    id: int
+    entity: str
+
+
+class ModifyName(BaseModel):
+    name: str
